@@ -17,7 +17,7 @@ A **Bridge profile** is a named snapshot of specific DAC-confirmed values, store
 | This one output's volume | EQ curves, EQ presets or internal RME setups |
 | | Wi-Fi credentials, Bridge language or website accent |
 
-Up to **eight profiles** can be stored. This firmware enables capture and application for a matching, MIDI-identified **ADI-2 DAC FS**, not Pro models. The library backup is consequently not a universal exchange format for all DACs or RoonPilot.
+Up to **eight profiles** can be stored. Profiles are bound to their saved DAC model identity, which must match the connected DAC's MIDI identity when applying them. The current profile format uses the **ADI-2 DAC** model identity. A library backup is not a cross-model RME setup or a RoonPilot backup.
 
 ## Create a new profile
 
@@ -87,6 +87,6 @@ Import validates format, model, values and unique names before replacing the lib
 
 ## What survives loss of power
 
-Profiles and successfully saved network/Bridge preferences are stored in non-volatile flash and survive normal power cycling. Do not interrupt an unfinished save by unplugging. A complete **Erase Flash** removes library and settings; separately, the event log is not designed as a persistent archive.
+Profiles and successfully saved network/Bridge preferences are stored in non-volatile flash and survive normal power cycling. Do not interrupt an unfinished save by unplugging. A complete reinstallation **with erasing** removes library and settings; separately, the event log is not designed as a persistent archive.
 
 [Next: Diagnose problems systematically →](troubleshooting.md)

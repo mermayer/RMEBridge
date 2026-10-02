@@ -12,10 +12,10 @@ Prüfe zuerst, **welcher Teil** nicht funktioniert: Versorgung, WLAN, USB-Verbin
 | Nur USB JTAG/serial debug unit erscheint | Vermutlich die native Buchse: zur UART-/COM-Buchse wechseln. Nicht die RoonPilot-Regel mit dem gedrehten Stecker übernehmen. |
 | Windows zeigt ein unbekanntes Gerät | USB-Seriell-Chip prüfen; bei CH343 gegebenenfalls den offiziellen [WCH-Treiber](https://www.wch-ic.com/downloads/CH343SER_EXE.html) installieren. |
 | Sichtbarer Port lässt sich nicht öffnen | Andere serielle Monitore, Flashprogramme oder Browser-Tabs schließen, die ihn verwenden. |
-| Verbindung wartet auf das Board | Die [BOOT-/RESET-Schrittfolge](installation.md#2-den-flashmodus-erreichen) verwenden. Das Werkzeug muss ESP32-S3 melden. |
-| Schreiben bricht ab | Mit 115200 Baud, kurzem Datenkabel und stabiler Versorgung versuchen. Dateien und Adressen kontrollieren. Nicht vorsorglich alles löschen. |
+| Verbindung wartet auf das Board | Die [BOOT-/RESET-Schrittfolge](installation.md#2-den-flashmodus-erreichen) verwenden. Der RMEBridge-Webinstaller muss das passende ESP32-S3-Board erkennen. |
+| Schreiben bricht ab | Kurzes Datenkabel und stabile Versorgung verwenden. Fehlermeldung des RMEBridge-Webinstallers lesen und die Installation wiederholen. Nicht vorsorglich alles löschen. |
 
-Nach einer unterbrochenen Installation kann der ROM-Downloadmodus des Chips weiterhin erreichbar sein, obwohl die Anwendung nicht startet. BOOT/RESET verwenden und das passende vollständige Paket erneut schreiben. Allgemeine Verbindungsdiagnose: [Espressif-Fehlerhilfe](https://docs.espressif.com/projects/esptool/en/latest/esp32s3/troubleshooting.html).
+Nach einer unterbrochenen Installation kann der eingebaute Flashmodus des Chips weiterhin erreichbar sein, obwohl die Anwendung nicht startet. Verwende BOOT/RESET und wiederhole die Installation mit dem RMEBridge-Webinstaller, sobald dieser bereitgestellt ist. Der Ablauf steht im [Installationskapitel](installation.md#firmware-installieren-flashen).
 
 ## Das Einrichtungs-WLAN oder Formular fehlt
 
@@ -29,7 +29,7 @@ Siehst du im Bridge-WLAN nur eine DAC-Seite ohne Eingabefelder, öffne ausdrück
 
 Prüfe deine private Notiz der Erststartzeile. Vor der Heimnetz-Einrichtung kann die [Startmeldung](installation.md#4-das-einrichtungs-passwort-ablesen) es erneut nennen. Bei einer bereits eingerichteten Bridge ist diese Ausgabe nicht zugesichert. Die Netzwerkseite zeigt es nicht an.
 
-**Erase Flash** und vollständige Neuinstallation erzeugen ein neues Passwort, löschen aber WLAN-Daten, Bridge-Einstellungen und Profile. Falls die Bridge noch erreichbar ist, vorher Profile exportieren. Löschen ist der letzte bewusste Ausweg, keine gewöhnliche WLAN-Reparatur.
+Eine **vollständige Neuinstallation mit Löschen** über den vorgesehenen RMEBridge-Webinstaller erzeugt ein neues Passwort, löscht aber WLAN-Daten, Bridge-Einstellungen und Profile. Dieser Weg ist erst mit dem bereitgestellten Installer möglich. Falls die Bridge noch erreichbar ist, vorher Profile exportieren. Löschen ist der letzte bewusste Ausweg, keine gewöhnliche WLAN-Reparatur.
 
 ## Die Webseite ist im Heimnetz nicht erreichbar
 
@@ -63,13 +63,13 @@ Vielleicht bearbeitest du einen anderen Kanal als den gerade hörbaren. **Line O
 
 Nicht jeder DAC unterstützt jede Option. Nicht gemeldete Modellparameter werden ausgeblendet. Ein Wert kann nur lesbar oder im aktuellen Modus unveränderbar sein. Schreiben benötigt außerdem einen aktuellen, bestätigten Anfangswert.
 
-Die komfortablen Lautstärke-/AutoDark-Regler und Profile sind in dieser Firmware für die erkannte **ADI-2 DAC FS**-Kennung freigegeben. Eine manuelle Pro-Auswahl aktiviert sie nicht. Die [Modelltabelle](index.md#welcher-rme-dac-passt) trennt verfügbare Funktionen.
+Prüfe im Überblick das erkannte Modell und den Verbindungszustand. Die [Modellübersicht](index.md#welcher-rme-dac-passt) erklärt die Geräteunterschiede. Einstellungen werden anhand der MIDI-Antworten des tatsächlichen DACs angeboten, nicht anhand einer beliebigen manuellen Bildauswahl.
 
 Ein Zielwechsel kann kurz auf einen offenen Befehl warten. Nach einem Fehler neu lesen, Ziel und tatsächlichen Wert prüfen, dann fortfahren. Nicht mehrere widersprüchliche Befehle hintereinander senden.
 
 ## Phones lässt sich nicht auswählen oder umschalten
 
-Beim **Zielwechsel** auf Phones muss sein Pegel bekannt sein. Über −60 dB muss die Bridge ihn erst absenken können. Fehlender Wert oder Schreibfreigabe verhindern den Abschluss.
+Beim **Zielwechsel** auf Phones muss sein Pegel bekannt sein. Über −60 dB muss die Bridge ihn erst absenken. Die Auswahl wird erst abgeschlossen, wenn ein aktueller Wert vorliegt und der DAC die gegebenenfalls notwendige Absenkung bestätigt hat.
 
 Für **Am DAC umschalten** müssen zusätzlich beide Kopfhörerpfade bekannt und höchstens −60 dB laut sein. **Line Out stumm bei Kopfhörer** muss **Umschalten** oder **Eingesteckt** sein. Dieser Schalter führt die DAC-Toggle-Funktion aus, keine freie Ausgangswahl. Bleibt die Umschaltung unbestätigt, erst den tatsächlichen Zustand prüfen: Ein weiterer Toggle könnte zurückschalten.
 
@@ -101,7 +101,7 @@ Das Log ist ein Ring mit **100 Einträgen**, kein Archiv. Alte Einträge werden 
 
 ## Netzwerk und Datenschutz
 
-Webseite und API verwenden HTTP und haben **keine Anmeldung**. Jeder erreichbare Netzclient kann freigegebene Funktionen steuern. Nur vertrauenswürdiges Netz nutzen, keine Internet-Portfreigabe und kein ungeschütztes öffentliches WLAN. Das AP-Passwort schützt den Zugangspunkt, ist aber keine Anmeldung im Heimnetz.
+Webseite und API verwenden HTTP und haben **keine Anmeldung**. Jeder erreichbare Netzclient kann Bedienfunktionen steuern. Nur vertrauenswürdiges Netz nutzen, keine Internet-Portfreigabe und kein ungeschütztes öffentliches WLAN. Das AP-Passwort schützt den Zugangspunkt, ist aber keine Anmeldung im Heimnetz.
 
 Profil-Backups enthalten keine WLAN-Zugangsdaten. Die serielle Erststartzeile enthält dagegen das AP-Passwort: vor Weitergabe entfernen. Screenshots auf private Netzwerkinformationen prüfen. Logs enthalten keine WLAN-Passwörter, können aber Profilnamen enthalten.
 

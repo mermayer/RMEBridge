@@ -17,9 +17,13 @@ Control your RME ADI-2 from a web page on your home network, using an ESP32-S3, 
 | Hilfe / Help | [Fehlerhilfe und Begriffe](docs/user/de/troubleshooting.md) | [Troubleshooting and glossary](docs/user/en/troubleshooting.md) |
 | REST-API | [Einführung mit Beispielen](docs/user/de/api.md) | [Introduction with examples](docs/user/en/api.md) |
 
-Die Anleitung beginnt beim leeren Board und setzt keine ESP32- oder MIDI-Kenntnisse voraus. Sie berücksichtigt ADI-2 DAC, ADI-2 Pro und ADI-2/4 Pro SE. Die verfügbaren Einstellungen richten sich nach dem erkannten Gerät; Einschränkungen sind in den jeweiligen Kapiteln erklärt.
+Die Anleitung beginnt beim leeren Board und setzt keine ESP32- oder MIDI-Kenntnisse voraus. Sie berücksichtigt ADI-2 DAC, ADI-2 Pro und ADI-2/4 Pro SE. Die verfügbaren Einstellungen richten sich nach dem erkannten Gerät; modellabhängige Besonderheiten sind in den jeweiligen Kapiteln erklärt.
 
-The guide starts with an empty board and assumes no ESP32 or MIDI knowledge. It covers ADI-2 DAC, ADI-2 Pro and ADI-2/4 Pro SE. Available controls depend on the identified device; limitations are explained in the relevant chapters.
+The guide starts with an empty board and assumes no ESP32 or MIDI knowledge. It covers ADI-2 DAC, ADI-2 Pro and ADI-2/4 Pro SE. Available controls depend on the identified device; model-specific differences are explained in the relevant chapters.
+
+Die Installation ist über einen eigenen RMEBridge-Webinstaller vorgesehen, wie bei RoonPilot und der IR Bridge. Der Installer wird separat bereitgestellt und ist noch nicht verfügbar; die Anleitung beschreibt bereits den vorgesehenen Ablauf.
+
+Installation is planned through a dedicated RMEBridge web installer, following the same workflow as RoonPilot and the IR Bridge. The installer will be supplied separately and is not yet available; the guide already describes the intended steps.
 
 ![RME Bridge: DAC control, volume knob and confirmed output values](docs/user/assets/screenshots/en-control.png)
 

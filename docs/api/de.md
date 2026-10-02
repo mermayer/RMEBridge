@@ -1,6 +1,6 @@
 # RME Bridge – lokale REST-API v1
 
-Dokumentierter Firmwarestand: `0.1.0-test.25`. Die REST-API ist für ein **vertrauenswürdiges lokales Netz** bestimmt. Sie
+API-Version: **1**. Die installierte Firmwareversion liefert `GET /api/v1` im Feld `firmwareVersion`. Die REST-API ist für ein **vertrauenswürdiges lokales Netz** bestimmt. Sie
 hat noch **keine Anmeldung**; deshalb weder Portfreigabe noch Zugriff aus
 einem nicht vertrauenswürdigen Netz einrichten. Die bisherigen `/api/...`-Endpunkte bleiben
 für die Bridge-Webseite erhalten, sind aber kein stabiler Vertrag für andere
@@ -27,7 +27,7 @@ Beispiele für API-Aufrufe im Browser und mit PowerShell stehen auch im
 
 - JSON über HTTP; Antworten mit `Cache-Control: no-store`. Zahlen für
   Lautstärke sind **Zehntel dB**: `-605` bedeutet −60,5 dB. Die gültigen
-  Werte und das aktuelle Schreibrecht liefert `/capabilities`.
+  Werte und die aktuellen Bedienbedingungen liefert `/capabilities`.
 - `null` bedeutet: Wert gegenwärtig nicht bestätigt. Ein DAC-Ausfall macht
   alte Statuswerte nicht zu neuen Istwerten.
 - `selectedTarget` ist der von der Bridge **adressierte** Ausgang:
@@ -35,9 +35,8 @@ Beispiele für API-Aufrufe im Browser und mit PowerShell stehen auch im
   `activeOutputCode` ist ein separater, roher DAC-Status. Das Ändern von
   `selectedTarget` schaltet den physischen Ausgang **nicht** um.
   Nur der separate Befehl `POST /api/v1/output/toggle` betätigt die
-  physische Toggle-Funktion. Er ist vorerst ausschließlich für einen per
-  MIDI erkannten ADI-2 DAC FS mit aktivem „Toggle Ph/Line“ oder
-  „Toggle plugged“ freigegeben. Beide Phones-Pegel müssen vom DAC bestätigt
+  physische Toggle-Funktion des per MIDI erkannten ADI-2 DAC FS mit aktivem
+  „Toggle Ph/Line“ oder „Toggle plugged“. Beide Phones-Pegel müssen vom DAC bestätigt
   und höchstens −60 dB sein. Die Webseite folgt nach bestätigter
   Umschaltung mit ihrem Steuerziel dem neuen Ausgang; ein direkter API-Aufruf
   ändert `selectedTarget` nicht.
@@ -45,8 +44,8 @@ Beispiele für API-Aufrufe im Browser und mit PowerShell stehen auch im
   Pegel nötigenfalls auf −60 dB, bevor sie die Auswahl als abgeschlossen
   meldet. Ein bereits leiserer Pegel bleibt unverändert. Direkte API-Aufrufe
   von `/settings/target` führen diese Webseitenfolge nicht automatisch aus.
-- Die Komfort-Endpunkte für Lautstärke und AutoDark sind auf den per MIDI
-  erkannten ADI-2 DAC FS beschränkt. `/api/v1/parameters` bietet einzelne,
+- Die Komfort-Endpunkte für Lautstärke und AutoDark adressieren den per MIDI
+  erkannten ADI-2 DAC FS. `/api/v1/parameters` bietet einzelne,
   rückbestätigte Änderungen der dokumentierten Nicht-EQ-Werte für das
   erkannte Modell. Nur Einträge mit `writable: true` können geändert werden.
   Eine manuelle Modellauswahl ersetzt keine MIDI-Erkennung. Gewöhnliche
@@ -81,7 +80,7 @@ Beispiele für API-Aufrufe im Browser und mit PowerShell stehen auch im
 | GET | `/api/v1` | API-Version, Einschränkung und Links |
 | GET | `/api/v1/status` | USB/MIDI/DAC-Zustand, alle drei Ausgänge, AutoDark/Display/Standby, IR |
 | GET | `/api/v1/time` | Zeitsynchronisierung, Unix-Sekunden oder `null`, Laufzeit |
-| GET | `/api/v1/capabilities` | Les-/Schreibbarkeit je Funktion samt Sperrgrund und Lautstärkegrenzen |
+| GET | `/api/v1/capabilities` | Les-/Schreibbarkeit je Funktion, aktuelle Bedingungen und Lautstärkegrenzen |
 | GET | `/api/v1/settings` | Sprache, Akzentfarbe, Modellpräferenz und adressierter Ausgang |
 | PUT | `/api/v1/settings/language` | `{"language":"de"}` oder `"en"` speichern |
 | PUT | `/api/v1/settings/accent-color` | `{"accentColor":"#5BA8FF"}` aus der neunfarbigen Webseiten-Palette speichern |
@@ -121,8 +120,7 @@ Die Antwort `202` enthält `statusUrl`. Dort auf `confirmed` warten und danach
 `activeOutputCode`; bei `failed` oder Timeout nicht blind wiederholen.
 `409` schützt vor veraltetem Status, falschem Modell, ungeeigneter
 Toggle-Konfiguration oder zu hohem Phones-Pegel. Ohne DAC-Rückmeldung gilt
-ein USB-Sendeerfolg ausdrücklich nicht als Umschaltung. Diese Aktion ist für
-ADI-2 Pro und ADI-2/4 Pro SE nicht verfügbar.
+ein USB-Sendeerfolg ausdrücklich nicht als Umschaltung.
 
 ### Status und Fähigkeiten
 
@@ -256,8 +254,9 @@ Profilnamen müssen eindeutig sein und dürfen höchstens 48 UTF-8-Bytes
 umfassen. Für die Momentaufnahme muss ein passender ADI-2 DAC FS online sein;
 beide gespeicherten Werte müssen vom DAC bestätigt sein. Ein `POST` legt ein
 neues Profil an (`201`), ein `PUT /profiles/{id}` ersetzt dessen Momentaufnahme
-(`200`). Weder Vorgang sendet einen DAC-Befehl. Andere RME-Modelle können
-vorerst nicht als schreibbare Profile angelegt oder importiert werden.
+(`200`). Weder Vorgang sendet einen DAC-Befehl. Das Profilformat Version 1
+verwendet `modelId: 113` für die ADI-2-DAC-Familie; die Modellkennung muss
+beim Anwenden mit dem angeschlossenen DAC übereinstimmen.
 
 Zum Wiederherstellen das exportierte JSON mit `confirmReplace: true`
 ergänzen und per `PUT /profiles/backup` senden. Die Bridge validiert Format,

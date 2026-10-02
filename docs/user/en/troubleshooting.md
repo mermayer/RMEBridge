@@ -12,10 +12,10 @@ First identify **which part** is not working: power, Wi-Fi, USB, MIDI replies or
 | Only USB JTAG/serial debug unit appears | Probably native USB: change to UART/COM. Do not copy RoonPilot's plug-rotation rule. |
 | Windows shows an unknown device | Identify the USB-serial chip; for CH343 install the official [WCH driver](https://www.wch-ic.com/downloads/CH343SER_EXE.html) if needed. |
 | Visible port cannot be opened | Close other serial monitors, flash tools or browser tabs using it. |
-| Connection waits for the board | Use the [BOOT/RESET sequence](installation.md#2-enter-flashing-mode). The tool must report ESP32-S3. |
-| Writing is interrupted | Try 115200 baud, a short data cable and stable power. Check files and offsets. Do not erase everything as a first response. |
+| Connection waits for the board | Use the [BOOT/RESET sequence](installation.md#2-enter-flashing-mode). The RMEBridge web installer must identify the matching ESP32-S3 board. |
+| Writing is interrupted | Use a short data cable and stable power. Read the RMEBridge web installer's error message and retry installation. Do not erase everything as a first response. |
 
-The chip's ROM download mode may remain reachable after interrupted installation even when the application will not boot. Use BOOT/RESET and write the correct complete package. General diagnostics: [Espressif troubleshooting](https://docs.espressif.com/projects/esptool/en/latest/esp32s3/troubleshooting.html).
+The chip's built-in flashing mode may remain reachable after interrupted installation even when the application will not boot. Use BOOT/RESET and retry with the RMEBridge web installer once it is available. See the [installation chapter](installation.md#installing-the-firmware-flashing).
 
 ## Setup Wi-Fi or its form is missing
 
@@ -29,7 +29,7 @@ If Bridge Wi-Fi shows only a DAC page without fields, explicitly open **http://1
 
 Check your private note of the first-start message. Before home Wi-Fi configuration, [boot messages](installation.md#4-read-the-setup-password) can show it again. This is not assured after configuration. The Network page does not display it.
 
-**Erase Flash** and complete reinstallation create a new password but lose Wi-Fi details, preferences and profiles. Export profiles first if reachable. Erasure is a last deliberate resort, not ordinary Wi-Fi repair.
+A **complete reinstallation with erasing** through the planned RMEBridge web installer creates a new password but loses Wi-Fi details, preferences and profiles. This method becomes available when the installer is supplied. Export profiles first if reachable. Erasure is a last deliberate resort, not ordinary Wi-Fi repair.
 
 ## The website is unreachable on home Wi-Fi
 
@@ -63,13 +63,13 @@ You may be editing a channel you are not listening to. **Line Out / Phones / IEM
 
 Models support different options. Unreported parameters are hidden. A value may be read-only or unchangeable in the current mode. Writes also need a current, confirmed starting value.
 
-Convenient volume/AutoDark controls and profiles are enabled for the detected **ADI-2 DAC FS** identity in this firmware. Manual Pro selection cannot unlock them. The [model table](index.md#which-rme-dac-can-i-use) distinguishes functions.
+Check the identified model and connection state on Overview. The [model overview](index.md#which-rme-dac-can-i-use) explains device differences. Settings follow the actual DAC's MIDI responses, not an arbitrary manual picture selection.
 
 A target change may briefly wait for a pending command. After failure read state again, check target and actual value, then continue. Do not send contradictory commands repeatedly.
 
 ## Phones cannot be selected or switched
 
-On a **target change**, Phones level must be known. Above −60 dB the Bridge must first be able to lower it. Missing readings or write permission prevent completion.
+On a **target change**, Phones level must be known. Above −60 dB the Bridge lowers it first. Selection completes only after a current reading is available and the DAC has confirmed any required reduction.
 
 For **Switch on DAC**, both headphone paths must additionally be known and at or below −60 dB. **Mute Line Out with headphones** must be **Toggle** or **Plugged in**. This runs the DAC toggle function, not arbitrary output selection. If unconfirmed, check actual state first: another toggle could switch back.
 
@@ -101,7 +101,7 @@ The log is a **100-entry ring**, not an archive. Oldest entries are replaced. RT
 
 ## Network and privacy
 
-Website and API use HTTP with **no login**. Any reachable network client can control permitted functions. Use a trusted network, no internet port forwarding and no unprotected public Wi-Fi. The AP password protects setup Wi-Fi, not a home-network login.
+Website and API use HTTP with **no login**. Any reachable network client can operate controls. Use a trusted network, no internet port forwarding and no unprotected public Wi-Fi. The AP password protects setup Wi-Fi, not a home-network login.
 
 Profile backups contain no Wi-Fi credentials. Initial serial messages can contain the AP password: remove it before sharing. Check screenshots for private network details. Logs contain no Wi-Fi passwords but may contain profile names.
 

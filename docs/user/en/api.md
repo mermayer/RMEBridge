@@ -2,7 +2,7 @@
 
 [← Troubleshooting](troubleshooting.md) · [Guide overview](index.md)
 
-This chapter is optional. Web pages are sufficient for ordinary use. The **REST API** lets programs read state and settings as **JSON** and request permitted changes over HTTP. Roon and RoonPilot are not required.
+This chapter is optional. Web pages are sufficient for ordinary use. The **REST API** lets programs read state and settings as **JSON** and change settings over HTTP. Roon and RoonPilot are not required.
 
 ## Start with read-only requests
 
@@ -39,7 +39,7 @@ Use **`/api/v1`** for new integrations. The website's unversioned internal paths
 | Loudness raw values | Half-dB: bass `10` = **+5 dB**, Vol-Ref `-98` = **−49 dB** |
 | Balance / Width | Hundredths: Width `100` = **1.00** |
 | `min`, `max`, `step` | Bounds and grid of each parameter |
-| `writable` | Currently permitted technical write path |
+| `writable` | Whether this value can be changed in the current DAC state |
 | `usbEpoch` | USB-session identity, guarding against stale state after reconnection |
 
 Scales differ. Read each option's metadata instead of assuming one conversion. Only confirmed parameters of the identified model are listed. A model preference does not replace identification. Details: [technical reference](../../api/en.md) and [OpenAPI JSON](../../api/openapi.json).
@@ -50,7 +50,7 @@ Scales differ. Read each option's metadata instead of assuming one conversion. O
 |---|---|---|
 | GET | empty, meaning `/api/v1` | Version and links |
 | GET | `/status` | USB, MIDI, model, levels, AutoDark, IR and output state |
-| GET | `/capabilities` | Availability and lock reasons |
+| GET | `/capabilities` | Device functions and current operating conditions |
 | GET | `/parameters` | Confirmed non-EQ values and bounds |
 | GET | `/time` | Time synchronisation, UTC or unknown, uptime |
 | GET | `/network` | Wi-Fi status without its password |
@@ -61,8 +61,8 @@ Scales differ. Read each option's metadata instead of assuming one conversion. O
 | PUT | `/settings/target` | Save editing target, no physical switch |
 | PUT | `/volume` | Request one bounded absolute level step |
 | PUT | `/auto-dark` | AutoDark on/off |
-| PUT | `/parameters` | Change one permitted parameter |
-| POST | `/output/toggle` | Request permitted physical DAC toggle |
+| PUT | `/parameters` | Change one parameter |
+| POST | `/output/toggle` | Run the DAC's physical toggle function |
 | POST | `/refresh` | Request a new DAC status query |
 | POST | `/ir/power` | Send the model's On/Off code |
 | GET | `/operations/{id}` | Follow a MIDI write operation |
@@ -95,7 +95,7 @@ Parameter writes require fresh `expected` and `usbEpoch` fields. MIDI operations
 
 Direct `/settings/target` calls **do not automatically reduce Phones level**. Custom clients must implement safe target selection. `/output/toggle` also leaves `selectedTarget` unchanged; after confirmation the website follows with separate target selection.
 
-Do not blindly repeat toggles: the same command twice can switch back. The technical reference specifies permission checks and expected output state. IR reports **`sent: true`, `confirmed: false`**, making no claim about actual power. Import with `confirmReplace: true` replaces the whole profile library without changing DAC settings.
+Do not blindly repeat toggles: the same command twice can switch back. The technical reference specifies prerequisites and expected output state. IR reports **`sent: true`, `confirmed: false`**, making no claim about actual power. Import with `confirmReplace: true` replaces the whole profile library without changing DAC settings.
 
 ## Access and reference
 

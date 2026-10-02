@@ -2,7 +2,7 @@
 
 [← Fehlerbehebung](troubleshooting.md) · [Zur Übersicht](index.md)
 
-Dieses Kapitel ist optional. Für die normale Bedienung reichen die Webseiten. Die **REST-API** ist eine weitere Schnittstelle zu derselben Bridge: Programme können Status und Einstellungen als **JSON** abfragen und freigegebene Änderungen über HTTP anfordern. Roon oder RoonPilot werden nicht benötigt.
+Dieses Kapitel ist optional. Für die normale Bedienung reichen die Webseiten. Die **REST-API** ist eine weitere Schnittstelle zu derselben Bridge: Programme können Status und Einstellungen als **JSON** abfragen und Einstellungen über HTTP ändern. Roon oder RoonPilot werden nicht benötigt.
 
 ## Zuerst nur lesen
 
@@ -39,7 +39,7 @@ Neue Anwendungen verwenden **`/api/v1`**. Die unversionierten internen Webseiten
 | Loudness-Rohwerte | Halbe dB: Bass `10` = **+5 dB**, Vol-Ref `-98` = **−49 dB** |
 | Balance / Width | Hundertstel: Width `100` = **1,00** |
 | `min`, `max`, `step` | Bereich und Raster des einzelnen Parameters |
-| `writable` | Aktuell freigegebener technischer Schreibweg |
+| `writable` | Ob dieser Wert im aktuellen DAC-Zustand geändert werden kann |
 | `usbEpoch` | Kennung der USB-Verbindung; schützt vor alten Zuständen nach Neuverbindung |
 
 Skalen unterscheiden sich. Lies die Metadaten jeder Option, statt global umzurechnen. Nur bestätigte Parameter des erkannten Modells werden gelistet. Modellpräferenz ersetzt keine Erkennung. Details: [technische API-Referenz](../../api/de.md) und [OpenAPI JSON](../../api/openapi.json).
@@ -50,7 +50,7 @@ Skalen unterscheiden sich. Lies die Metadaten jeder Option, statt global umzurec
 |---|---|---|
 | GET | leer, also `/api/v1` | Version und Links |
 | GET | `/status` | USB, MIDI, Modell, Pegel, AutoDark, IR und Ausgangsstatus |
-| GET | `/capabilities` | Verfügbarkeit und Sperrgründe |
+| GET | `/capabilities` | Gerätefunktionen und aktuelle Bedienbedingungen |
 | GET | `/parameters` | Bestätigte Nicht-EQ-Werte und Grenzen |
 | GET | `/time` | Zeitabgleich, UTC oder unbekannt, Laufzeit |
 | GET | `/network` | WLAN-Status ohne Passwort |
@@ -61,8 +61,8 @@ Skalen unterscheiden sich. Lies die Metadaten jeder Option, statt global umzurec
 | PUT | `/settings/target` | Bearbeitungsziel speichern, keine physische Umschaltung |
 | PUT | `/volume` | Einen begrenzten absoluten Pegelschritt anfordern |
 | PUT | `/auto-dark` | AutoDark ein/aus |
-| PUT | `/parameters` | Einen freigegebenen Parameter ändern |
-| POST | `/output/toggle` | Freigegebene physische DAC-Umschaltung |
+| PUT | `/parameters` | Einen Parameter ändern |
+| POST | `/output/toggle` | Physische Toggle-Funktion des DACs ausführen |
 | POST | `/refresh` | Neue DAC-Statusabfrage anfordern |
 | POST | `/ir/power` | Modellbezogenen Ein-/Aus-Code senden |
 | GET | `/operations/{id}` | MIDI-Schreibauftrag verfolgen |
@@ -95,7 +95,7 @@ Parameter-Schreiben benötigt frische `expected`- und `usbEpoch`-Werte. Parallel
 
 Direkte `/settings/target`-Aufrufe führen **keine automatische Phones-Absenkung** aus. Eigene Clients müssen die sichere Zielwahl umsetzen. `/output/toggle` ändert außerdem nicht `selectedTarget`; die Webseite folgt nach Bestätigung separat mit der Zielwahl.
 
-Toggle nicht blind wiederholen: Derselbe Befehl zweimal kann zurückschalten. Die technische Referenz nennt Freigabebedingungen und erwarteten Ausgangszustand. IR meldet **`sent: true`, `confirmed: false`** und behauptet damit keinen tatsächlichen Power-Zustand. Profilimport mit `confirmReplace: true` ersetzt die gesamte Bibliothek, verändert aber keine DAC-Einstellung.
+Toggle nicht blind wiederholen: Derselbe Befehl zweimal kann zurückschalten. Die technische Referenz nennt die Voraussetzungen und den erwarteten Ausgangszustand. IR meldet **`sent: true`, `confirmed: false`** und behauptet damit keinen tatsächlichen Power-Zustand. Profilimport mit `confirmReplace: true` ersetzt die gesamte Bibliothek, verändert aber keine DAC-Einstellung.
 
 ## Zugriff und Referenz
 

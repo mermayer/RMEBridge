@@ -17,7 +17,7 @@
       "get": {"summary": "Read SNTP synchronization state and UTC time", "responses": {"200": {"description": "Unix seconds are null before synchronization", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Time"}}}}}}
     },
     "/api/v1/capabilities": {
-      "get": {"summary": "Read model-specific capabilities and lock reasons", "responses": {"200": {"description": "Dynamic capability map", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Capabilities"}}}}}}
+      "get": {"summary": "Read model-specific capabilities and current operating conditions", "responses": {"200": {"description": "Dynamic capability map", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Capabilities"}}}}}}
     },
     "/api/v1/settings": {
       "get": {"summary": "Read saved Bridge settings", "responses": {"200": {"description": "Saved settings", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Settings"}}}}}}
@@ -36,7 +36,7 @@
     },
     "/api/v1/output/toggle": {
       "post": {
-        "summary": "Trigger the physical Phones/Line toggle on a verified ADI-2 DAC FS",
+        "summary": "Trigger the physical Phones/Line toggle on a MIDI-identified ADI-2 DAC FS",
         "description": "Momentary MIDI index-63 trigger. Requires the DAC's Mute Line toggle mode and both headphone levels at or below -60 dB. The current active output and USB epoch are mandatory stale-state guards. HTTP 202 is not confirmation; poll Location for an observed active-output code change. The endpoint does not change selectedTarget; the Bridge website follows the confirmed output separately.",
         "requestBody": {"required": true, "content": {"application/json": {"schema": {
           "type": "object", "required": ["expectedActiveOutputCode", "usbEpoch"],

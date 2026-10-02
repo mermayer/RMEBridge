@@ -17,7 +17,7 @@ Ein **Bridge-Profil** ist eine benannte Momentaufnahme bestimmter, bestätigter 
 | Lautstärke dieses einen Ausgangs | EQ-Kurven, EQ-Presets und interne RME-Setups |
 | | WLAN-Daten, Bridge-Sprache und Website-Akzentfarbe |
 
-Maximal **acht Profile** sind möglich. In dieser Firmware ist das Erfassen und Anwenden von Profilen für den passenden, per MIDI erkannten **ADI-2 DAC FS** verfügbar, nicht für die Pro-Familien. Das Backup der Profilbibliothek ist entsprechend kein Austauschformat für alle DAC-Modelle oder für RoonPilot.
+Maximal **acht Profile** sind möglich. Profile sind an die gespeicherte DAC-Modellkennung gebunden; beim Anwenden muss sie zur MIDI-Identität des angeschlossenen DACs passen. Das aktuelle Profilformat verwendet die Modellkennung des **ADI-2 DAC**. Ein Backup dieser Bibliothek ist kein modellübergreifendes RME-Setup und kein RoonPilot-Backup.
 
 ## Ein neues Profil anlegen
 
@@ -87,6 +87,6 @@ Ein Import prüft Format, Modell, Werte und eindeutige Namen, bevor die Biblioth
 
 ## Was bei Stromverlust erhalten bleibt
 
-Gespeicherte Profile sowie die erfolgreich gespeicherten WLAN-/Bridge-Einstellungen liegen im dauerhaften Flash-Speicher. Sie bleiben nach einem normalen Stromwechsel erhalten. Noch nicht abgeschlossene Speichervorgänge darfst du nicht durch Abziehen unterbrechen. Ein vollständiges **Erase Flash** entfernt die Bibliothek und Einstellungen; das Ereignislog ist außerdem unabhängig davon nicht als dauerhaftes Archiv ausgelegt.
+Gespeicherte Profile sowie die erfolgreich gespeicherten WLAN-/Bridge-Einstellungen liegen im dauerhaften Flash-Speicher. Sie bleiben nach einem normalen Stromwechsel erhalten. Noch nicht abgeschlossene Speichervorgänge darfst du nicht durch Abziehen unterbrechen. Eine vollständige Neuinstallation **mit Löschen des Speichers** entfernt die Bibliothek und Einstellungen; das Ereignislog ist außerdem unabhängig davon nicht als dauerhaftes Archiv ausgelegt.
 
 [Weiter: Probleme systematisch eingrenzen →](troubleshooting.md)

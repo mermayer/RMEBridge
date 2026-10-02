@@ -1,6 +1,6 @@
 # RME Bridge – local REST API v1
 
-Documented firmware version: `0.1.0-test.25`. The REST API is for a **trusted local
+API version: **1**. `GET /api/v1` reports the installed firmware version in `firmwareVersion`. The REST API is for a **trusted local
 network only**. It has **no authentication** yet: do not forward a router
 port or expose it to an untrusted network. The older `/api/...` paths remain
 for the Bridge website but are not a stable integration contract. New clients
@@ -25,7 +25,7 @@ Browser and PowerShell request examples are also available in the
 
 - JSON over HTTP; responses use `Cache-Control: no-store`. Volume integers
   are **tenths of a dB**: `-605` means −60.5 dB. Consult `/capabilities`
-  for limits and current write permission.
+  for limits and current operating conditions.
 - `null` means the DAC value is not currently confirmed. An old value is
   not presented as current after a DAC outage.
 - `selectedTarget` is the output **addressed by the Bridge**: `3` = Line
@@ -33,7 +33,7 @@ Browser and PowerShell request examples are also available in the
   separate raw DAC status value. Saving `selectedTarget` does **not** switch
   the physical DAC output.
   Only the separate `POST /api/v1/output/toggle` triggers the physical
-  output switch. For now it is limited to a MIDI-identified ADI-2 DAC FS
+  output switch on a MIDI-identified ADI-2 DAC FS
   configured for Toggle Ph/Line or Toggle plugged. Both headphone levels
   must be DAC-confirmed and at or below −60 dB. After confirmation, the
   website follows the new active output with its control target; a direct
@@ -42,7 +42,7 @@ Browser and PowerShell request examples are also available in the
   to at most −60 dB if needed before reporting the selection complete. A
   quieter level stays unchanged. Direct `/settings/target` API calls do not
   automatically perform this website sequence.
-- The convenience endpoints for volume and AutoDark are limited to a
+- The convenience endpoints for volume and AutoDark address a
   MIDI-identified ADI-2 DAC FS. `/api/v1/parameters` provides individually
   confirmed changes to documented non-EQ values for the identified model.
   Only entries with `writable: true` can be changed. A manual model
@@ -75,7 +75,7 @@ Browser and PowerShell request examples are also available in the
 | GET | `/api/v1` | API version, access warning, links |
 | GET | `/api/v1/status` | USB/MIDI/DAC state, three outputs, AutoDark/display/standby, IR |
 | GET | `/api/v1/time` | Synchronization state, Unix seconds or `null`, uptime |
-| GET | `/api/v1/capabilities` | Read/write availability, lock reason, volume limits |
+| GET | `/api/v1/capabilities` | Read/write availability, current conditions, volume limits |
 | GET | `/api/v1/settings` | Language, accent colour, model preference, addressed output |
 | PUT | `/api/v1/settings/language` | Save `{"language":"de"}` or `"en"` |
 | PUT | `/api/v1/settings/accent-color` | Save `{"accentColor":"#5BA8FF"}` from the nine-colour website palette |
@@ -114,8 +114,7 @@ HTTP `202` returns a `statusUrl`. Poll it for `confirmed`, then read
 `/status` again. `observed` is the new `activeOutputCode`. After a failure
 or timeout, do not blindly repeat this non-idempotent toggle. `409` guards
 stale state, the wrong model, unsuitable toggle configuration and unsafe
-headphone levels. USB transmission alone is not DAC confirmation. This action
-is not available for ADI-2 Pro or ADI-2/4 Pro SE.
+headphone levels. USB transmission alone is not DAC confirmation.
 
 ### Status and capabilities
 
@@ -244,8 +243,9 @@ The backup response adds `exportedAt` (Unix seconds or `null`):
 Names must be unique and at most 48 UTF-8 bytes. Capture requires an
 online ADI-2 DAC FS with confirmed volume and AutoDark values. `POST`
 creates a profile (`201`); `PUT /profiles/{id}` refreshes its snapshot
-(`200`). Neither sends a DAC command. Other RME models cannot yet be
-captured or imported as controllable profiles.
+(`200`). Neither sends a DAC command. Profile format version 1 uses
+`modelId: 113` for the ADI-2 DAC family; it must match the connected DAC
+when applying the profile.
 
 For restore, add `"confirmReplace":true` to the exported JSON and send
 it with `PUT /profiles/backup`. The Bridge validates format, version,

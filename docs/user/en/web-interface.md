@@ -45,20 +45,20 @@ The upper **Line Out**, **Phones 1/2**, and **Phones 3/4 / IEM** buttons select 
 
 This selection also applies on the settings page. For example, you can edit IEM settings while listening to Line Out. Selection alone does not physically switch the output.
 
-When **changing** to a Phones target, the website reads its confirmed volume. If it is louder than **−60 dB**, it lowers it in confirmed steps to −60 dB. An already quieter value stays unchanged. This is a real volume change on that headphone path even if it is not currently audible. An unknown level or unavailable reduction prevents selection from completing. This is not a permanent volume limit: afterwards you can deliberately raise an enabled control.
+When **changing** to a Phones target, the website reads its confirmed volume. If it is louder than **−60 dB**, it lowers it in confirmed steps to −60 dB. An already quieter value stays unchanged. This is a real volume change on that headphone path even if it is not currently audible. Selection completes only once the level is known and any required reduction is confirmed by the DAC. This is not a permanent volume limit: afterwards you can deliberately raise the level.
 
 ### Physically switch the active DAC output
 
 The separate **“Active output on DAC”** section displays the DAC-reported active output. **“Switch on DAC”** is a different action from choosing one of the three editing targets.
 
-For an enabled ADI-2 DAC FS:
+On the ADI-2 DAC FS:
 
 1. In **DAC settings → Device → Headphones → Mute Line Out with headphones**, set **Toggle** or **Plugged in**. These correspond to **Toggle Ph/Line** and **Toggle plugged** at the DAC; you can also set them there.
 2. Both headphone paths, Phones and IEM, need known, confirmed levels of **−60 dB or lower**. If necessary, select each editing target in turn and wait for its reduction. −71 dB already meets the condition; −40 dB is too high to enable switching.
 3. Press **Switch on DAC** once. The DAC follows its own toggle configuration. Connected headphone plugs can influence which sockets it considers.
 4. Wait for confirmation of the new active output. The editing target then follows it. Check both displays before adjusting further.
 
-A disabled button's message explains missing levels, unsuitable toggle configuration or model restrictions. Pro headphone options remain in DAC settings; this particular physical-switch shortcut is not enabled for Pro models. If switching is unconfirmed, do not click repeatedly: it may already have happened.
+Check the displayed state: missing levels or an unsuitable toggle configuration must be resolved first. On Pro models, DAC settings contains the headphone options for that model and operating mode. If switching is unconfirmed, do not click repeatedly: it may already have happened.
 
 ### Volume and the two numbers
 
@@ -78,7 +78,7 @@ The **Source** display belongs to the editing target. Clicking it opens the corr
 
 **IR Power → On / Off** sends the built-in power code for the known DAC model. These buttons operate the DAC, not the Bridge. The transmitter must be [connected correctly](installation.md#connect-an-optional-ir-transmitter) and aimed at the DAC.
 
-The line beneath the buttons identifies the IR model source: current USB-MIDI identification, manual preference or last detected model. A connected DAC's verified identity takes priority. Without a known model, IR buttons stay disabled. With a previously identified or correctly selected model, **On** can work while the DAC is off.
+The line beneath the buttons identifies the IR model source: current USB-MIDI identification, manual preference or last detected model. A connected DAC's confirmed identity takes priority. An IR command requires the correct model to be known. With a previously identified or correctly selected model, **On** can work while the DAC is off.
 
 “IR output ready” means the Bridge's signal output is available. It does **not** detect whether a transmitter is actually attached or the DAC has line of sight. Green transmitter status is not a range test. A send confirmation only proves the IR command was output. A subsequent MIDI response proves the DAC is reachable again; conversely, missing MIDI alone does not conclusively prove that it is off.
 
@@ -114,7 +114,7 @@ The preview helps you identify differences. Including volume is off by default, 
 
 Automatic identification probes the three RME families in sequence. **Automatic** is the normal choice. The actual response determines the name, commands and displayed values.
 
-Manual selection saves a **probe and IR preference**. The next USB detection tries that family first. It does not turn the device into another model, replace a MIDI connection or unlock disabled controls. If a DAC is already connected, probe order changes at the next USB detection.
+Manual selection saves a **probe and IR preference**. The next USB detection tries that family first. The identity reported by the DAC determines its settings; selecting a picture does not replace a MIDI connection. If a DAC is already connected, probe order changes at the next USB detection.
 
 To use IR On before first identification, manually select the **actual** model you own. With a DAC connected, its detected identity takes priority over that preference for commands. A mismatch is shown on the page.
 

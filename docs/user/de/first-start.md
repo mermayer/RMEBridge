@@ -77,14 +77,14 @@ Diese Voraussetzung und die Menüzuordnung beschreibt auch das [RME-Handbuch zur
 
 ## Die erste kleine Bedienung
 
-Für einen freigegebenen ADI-2 DAC FS:
+Wenn „DAC bereit“ und ein bestätigter Lautstärkewert angezeigt werden:
 
 1. Öffne **DAC-Steuerung** und prüfe, dass **Line Out** das gewünschte Bearbeitungsziel ist. Vergleiche den großen dB-Wert mit der Anzeige am DAC.
 2. Drücke einmal **−0,5 dB**. Beispielsweise wird aus −67,5 dB nun −68,0 dB: Die Zahl wird negativer und die Lautstärke leiser.
 3. Warte auf den bestätigten Wert. Drücke für den Rückweg einmal **+0,5 dB**.
 4. Wenn das DAC-Display mit AutoDark ausgeblendet ist, schalte **AutoDark aus**, um den Wert bequem abzulesen. Wecke die Anzeige nicht durch eine unbeabsichtigte Lautstärkeänderung.
 
-Bei nicht freigegebenem Lautstärkeregler nicht versuchen, die Erkennung mit einer falschen Modellwahl zu umgehen. Für die verfügbaren Einstellungen ist der Bereich **DAC-Einstellungen** maßgeblich. Bei Fehlern oder abweichenden Werten anhalten, aktuellen Status lesen und [die Fehlerhilfe](troubleshooting.md) verwenden.
+Prüfe vor einer Änderung das erkannte Modell, das Bearbeitungsziel und den aktuellen DAC-Wert. Für die modellbezogenen Optionen ist der Bereich **DAC-Einstellungen** maßgeblich. Bei Fehlern oder abweichenden Werten anhalten, aktuellen Status lesen und [die Fehlerhilfe](troubleshooting.md) verwenden.
 
 ## Danach: Ohne Computer betreiben
 

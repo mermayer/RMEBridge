@@ -12,10 +12,10 @@
 | USB-C-to-USB-B data cable to the DAC | USB-C connects to the board's **native USB socket**, USB-B to the DAC. Do not place a USB hub in this connection. |
 | Stable USB power | Powers the Bridge through its UART socket; the computer can supply it initially. The DAC keeps its own power supply. |
 | Wi-Fi | A reachable, password-protected **2.4 GHz** network; the phone/computer must be able to reach the Bridge on the same local network. |
-| RME Bridge firmware files | Four matching files from the RME Bridge firmware package, not RoonPilot or IR Bridge firmware. The guide itself contains no firmware. |
+| RMEBridge web installer | The dedicated browser installer for the RME Bridge, not the RoonPilot or IR Bridge installer. It supplies the matching firmware. |
 | Optional IR transmitter and wires | Only needed for power on/off from the website. Its supply and signal input must suit the actual module and 3.3 V logic. No IR module is needed for USB-MIDI settings. |
 
-**Flash** is the board's non-volatile storage. **Flashing** means writing the RME Bridge software into that storage. The software is called **firmware**. If you have the correct firmware files, you do not need to program it yourself or install a source-code editor.
+**Flash** is the board's non-volatile storage. **Flashing** means writing the RME Bridge software into that storage. The software is called **firmware**. The planned web installer handles the writing for you. You do not need to program anything, select individual firmware files or enter memory addresses.
 
 Place the exposed board on a dry, non-conductive surface. Keep screws, metal enclosures and loose wire ends away from contacts. Change GPIO wiring only with the Bridge switched off and disconnected from USB.
 
@@ -46,53 +46,43 @@ On the reference YD-ESP32-S3 V1.3 setup, the rear **USB-OTG solder bridge remain
 
 ## Installing the firmware: Flashing
 
-The standalone RME Bridge currently has **no dedicated web installer and no firmware-upload menu on its own website**. The following method uses Espressif's general [ESP Tool](https://espressif.github.io/esptool-js/). It runs directly in a browser. It does **not supply RME firmware**: you need the files separately from a matching RME Bridge firmware package.
+Flashing is planned through a **dedicated RMEBridge web installer**: the same straightforward browser workflow as RoonPilot and the IR Bridge, using the matching RMEBridge firmware and the UART connection described here.
 
-![The actual Espressif browser tool's start page. Program writes firmware; Console reads boot messages.](../assets/screenshots/espressif-flasher.png)
+**The RMEBridge web installer will be provided separately and is not yet available.** This guide already describes the intended workflow to follow once it is supplied. Do not use the RoonPilot or IR Bridge installer instead.
 
-### 1. Check the firmware package
+### 1. Open the RMEBridge web installer
 
-Extract the package into a folder. All four files must belong to the **same version**. Do not mix in another project's bootloader or partition table. The documented setup uses:
-
-| Flash Address | File | Purpose |
-|---|---|---|
-| `0x0` | `bootloader.bin` | ESP32-S3 startup program |
-| `0x8000` | `partition-table.bin` | Flash memory layout |
-| `0xf000` | `ota_data_initial.bin` | Initial application-slot selection |
-| `0x20000` | `roonpilot_rme_bridge.bin` | Bridge application, including its web pages |
-
-If the supplied firmware package specifies different addresses, do not guess or mix files: first clarify whether that package fits your board.
-
-`roonpilot_rme_bridge.bin` alone is **not a complete first-installation image**. It must not be placed at `0x0`. A package explicitly supplied as a complete merged factory image would use a different installation method; this guide describes four separate files.
+1. Once it is available, open the RMEBridge installation page in **Chrome or Edge on your computer**. The DAC control website on the Bridge and the web installer are different pages: the installer writes the software to the board; the control website is used afterwards.
+2. Check that the page explicitly identifies **RME Bridge** and the matching ESP32-S3 board. The installer supplies the firmware; you do not need to download, extract or assign files.
+3. Read the installation notes and acknowledge the prerequisites shown there. For an already configured Bridge, export profiles first and keep your Wi-Fi credentials and setup password.
 
 ### 2. Enter flashing mode
 
-1. Leave the DAC disconnected and the board connected to the computer through UART.
-2. Open [ESP Tool](https://espressif.github.io/esptool-js/). Leave **WebUSB (CH340)** unchecked; this method uses the UART serial port.
-3. In **Program**, select an initial **Baudrate** of `115200`. This is the serial transfer rate, not Wi-Fi speed.
-4. Click **Connect** and select the board's previously identified serial port. The tool must recognise an **ESP32-S3**. Do not continue if it reports a different chip.
-5. If automatic connection fails: hold **BOOT**, briefly press and release **RESET**, then release **BOOT**. Try connecting again. If necessary, hold BOOT during connection and release it once the chip is identified. BOOT is not a setting to keep permanently enabled.
+1. Leave the DAC disconnected. The board remains connected to the computer through its **UART/COM socket**.
+2. Start the device connection in the web installer. The browser opens a list of serial ports. Choose the RME Bridge's previously identified **CH343/USB-to-serial port** and confirm. Its COM number may differ between computers.
+3. The installer connects to the board and checks the detected chip. Continue only if the board matches the offered firmware.
+4. If automatic connection fails: hold **BOOT**, briefly press and release **RESET**, then release **BOOT**. Try connecting again. If necessary, hold BOOT during connection and release it once the chip is identified. BOOT is not a setting to keep permanently enabled.
+5. If no serial port appears, check the data cable, UART socket and, if necessary, the CH343 driver. If the browser reports a busy port, close other programs or browser tabs using the board.
 
-### 3. Write the files
+### 3. Install and wait for completion
 
-1. Once connected, the file rows appear. Set the first address to **`0x0`**, not the potentially prefilled `0x1000`.
-2. Select `bootloader.bin`. Use **Add File** to create three more rows and assign addresses and files exactly as shown in the table.
-3. Use **Flash Mode: dio**. **Flash Frequency: keep** retains the package's frequency; the documented package uses 80 MHz. **Flash Size: detect** must match the 16 MB board; do not force a smaller capacity.
-4. A new, empty board does not require a precautionary **Erase Flash**. Erasing may be appropriate when deliberately replacing another firmware or resetting completely. **Erase Flash removes all Bridge settings, profiles and the setup password.** Use it deliberately; export profiles and record network settings before erasing an already configured Bridge.
-5. Click **Program**. Leave cable, board and browser tab undisturbed while writing. Check completion of every file and any error message. Do not unplug after just the first progress bar reaches 100%.
-6. Choose **Disconnect**. If the firmware does not start automatically, briefly press **RESET** without holding BOOT.
+1. Select installation of the RMEBridge firmware in the installer. Read the notice for the displayed installation type before confirming.
+2. **An installation with a full erase removes all Bridge settings, profiles and the setup password.** A new board needs its first setup. An already used board requires your saved information after an erase.
+3. Keep the browser open and the USB cable connected throughout. The installer handles the required steps: erasing if applicable, writing the firmware and verifying the transferred data. You do not need to enter memory addresses or flash settings.
+4. Wait for the final success message. A single progress bar at 100% may represent only one stage; do not disconnect the board before the entire installation finishes.
+5. The Bridge restarts after installation. If it does not start automatically, briefly press **RESET** without holding BOOT. Keep it connected to the computer to read its setup password.
 
-Additional connection guidance is available in [Espressif's troubleshooting documentation](https://docs.espressif.com/projects/esptool/en/latest/esp32s3/troubleshooting.html).
+If installation stops, read the error message, check the connection and power supply, and retry with the RMEBridge web installer. A connection error is not a reason to use another project's firmware.
 
 ### 4. Read the setup password
 
 On first start, the Bridge generates its own random **16-character password** for its setup Wi-Fi. There is no shared default password.
 
-1. Disconnect the ESP Tool's **Program** session first.
-2. In **Console**, select `115200` baud, click **Start** and choose the same UART port.
+1. Finish the installation process first. Then open the web installer's **serial boot messages / Logs & Console**. This area shows text messages from the board, not the control website's Event log.
+2. If the browser asks you to choose a device again, select the same UART/COM port. The console uses serial boot messages at 115200 baud; Wi-Fi speed and DAC settings are unrelated.
 3. Briefly press the board's **RESET** button. Boot messages appear in the console.
 4. Find `First setup: connect to RME-Bridge-… with password …`. Record the Wi-Fi name and password **privately**. This line contains the real password; do not put it in public screenshots or support posts.
-5. **Stop** closes the console and releases the port. The board can remain connected to the computer until Wi-Fi setup is complete.
+5. Close or disconnect the console afterwards. The board can remain connected to the computer until Wi-Fi setup is complete.
 
 If the Bridge already has Wi-Fi credentials, the first-start line may not appear again. The password is stored on the Bridge but cannot be retrieved from the Network status page. Keep it from the first start. [What to do if you lose it](troubleshooting.md#the-setup-password-is-lost).
 
@@ -117,8 +107,8 @@ Aim the transmitter at the DAC's IR receiver. Keep metal and cable bundles away 
 
 ## Updating versus starting over
 
-A firmware update is not the same as a factory reset. Follow the matching package's update instructions. Writing a compatible package **without a full erase** is not intended to remove saved settings; nevertheless, do not assume settings survive every firmware change. Export profiles first and retain the Wi-Fi details and setup password.
+A firmware update is not the same as a factory reset. Follow the RMEBridge web installer's notes for the version and installation type offered. An update **without a full erase** is not intended to remove saved settings; nevertheless, do not assume settings survive every firmware change. Export profiles first and retain the Wi-Fi details and setup password.
 
-The current Bridge website has neither OTA upload nor a factory-reset button. An intentional fresh setup requires **Erase Flash** followed by a complete installation. The next first start creates a new AP password; profiles are lost without a previous backup. Do not use this as the first remedy for a missing DAC response.
+The current Bridge website has neither OTA upload nor a factory-reset button. An intentional fresh setup uses a complete installation with erasing in the planned web installer, once available. The next first start creates a new AP password; profiles are lost without a previous backup. Do not use this as the first remedy for a missing DAC response.
 
 [Next: Set up Wi-Fi and connect the DAC →](first-start.md)

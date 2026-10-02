@@ -25,7 +25,7 @@ The Bridge sends control commands over USB-MIDI and reads the DAC's responses. H
 
 While connected, the DAC's USB port belongs to the Bridge. It cannot also connect to a computer or USB streamer. The Bridge is not a USB audio streamer or USB pass-through. On Pro models, the operating mode and signal routing must also match your cabling.
 
-The web pages display current values, change enabled settings and configure the Bridge. An optional IR transmitter handles power on and off: there is no corresponding MIDI power command. No IR receiver or remote-learning procedure is required; the model-specific codes are built in.
+The web pages display current values, change DAC settings and configure the Bridge. An optional IR transmitter handles power on and off: there is no corresponding MIDI power command. No IR receiver or remote-learning procedure is required; the model-specific codes are built in.
 
 This guide does not include Roon integration, Bluetooth pairing, equaliser curves, an EQ preset editor, or direct loading/saving of the DAC's internal setups. The RME Bridge operates independently here. Do not confuse it with the RoonPilot IR Bridge.
 
@@ -33,18 +33,14 @@ This guide does not include Roon integration, Bluetooth pairing, equaliser curve
 
 The interface recognises the **ADI-2 DAC**, **ADI-2 Pro** and **ADI-2/4 Pro SE** families. The actual MIDI response, DAC firmware and operating mode determine availability – not simply the device picture you select.
 
-| Feature in this firmware | ADI-2 DAC FS | ADI-2 Pro | ADI-2/4 Pro SE |
+| Characteristic | ADI-2 DAC FS | ADI-2 Pro | ADI-2/4 Pro SE |
 |---|---|---|---|
 | Identify the model and display reported values | Yes | Yes | Yes |
-| Model-specific non-EQ settings | Yes, where reported by the DAC | Where reported and enabled | Where reported and enabled |
+| Model-specific non-EQ settings over MIDI | Settings belonging to this model | Settings belonging to this model and operating mode | Settings belonging to this model and operating mode |
 | Analogue input settings | No analogue input | Yes | Yes, plus RIAA functions |
-| Volume slider and ±0.5 dB buttons | Enabled for the recognised DAC FS USB identity | Not enabled | Not enabled |
-| AutoDark shortcut on “DAC control” | Enabled | Not enabled; see the parameter section | Not enabled; see the parameter section |
-| Create and apply Bridge profiles | Yes | Not available | Not available |
-| “Switch on DAC” | Yes, under the documented conditions | Not available | Not available |
 | Model-specific IR power codes | Yes, with a suitable transmitter | Yes, with a suitable transmitter | Yes, with a suitable transmitter |
 
-A grey control does not mean that you need to “unlock” it. [Possible causes are explained here](troubleshooting.md#a-control-is-grey-or-an-option-is-missing). Automatic identification distinguishes the families; it does not guarantee support for every historical hardware or firmware variant.
+The pages adapt their options to the identified model. Analogue input settings therefore do not appear for the ADI-2 DAC; RIAA belongs to the ADI-2/4 Pro SE. Operating mode, sample rate and current MIDI readings can also affect which setting can be changed at a particular time. [See possible causes of a grey control](troubleshooting.md#a-control-is-grey-or-an-option-is-missing).
 
 ## Three things to remember
 

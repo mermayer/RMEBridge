@@ -77,14 +77,14 @@ This prerequisite and menu mapping are also described in the [RME ADI-2 Remote m
 
 ## Your first small adjustment
 
-For an enabled ADI-2 DAC FS:
+When “DAC ready” and a confirmed volume reading are displayed:
 
 1. Open **DAC control** and check that **Line Out** is the intended editing target. Compare the large dB value with the DAC's display.
 2. Press **−0.5 dB** once. For example, −67.5 dB becomes −68.0 dB: a more negative value is quieter.
 3. Wait for the confirmed value. Press **+0.5 dB** once to return.
 4. If AutoDark hides the DAC display, turn **AutoDark off** to read it comfortably. Avoid waking it by unintentionally changing volume.
 
-If the volume control is not enabled, do not try to bypass identification by selecting a different model. **DAC settings** determines the available options. Stop if an error or discrepancy appears, read the current state and use [Troubleshooting](troubleshooting.md).
+Before making a change, check the identified model, editing target and current DAC reading. **DAC settings** contains the model-specific options. Stop if an error or discrepancy appears, read the current state and use [Troubleshooting](troubleshooting.md).
 
 ## Afterwards: Operate without a computer
 

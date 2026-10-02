@@ -45,20 +45,20 @@ Die drei oberen Felder **Line Out**, **Phones 1/2**, **Phones 3/4 / IEM** wähle
 
 Die Auswahl gilt auch auf der Einstellungsseite. Du kannst damit beispielsweise IEM-Einstellungen bearbeiten, obwohl du gerade Line Out hörst. Sie schaltet nicht allein den physischen Ausgang um.
 
-Bei einem **Wechsel** auf ein Phones-Ziel liest die Webseite dessen bestätigten Pegel. Ist er lauter als **−60 dB**, senkt sie ihn in bestätigten Schritten auf −60 dB ab. Liegt er schon darunter, bleibt er unverändert. Diese Absenkung ist eine echte Änderung am gewählten Kopfhörerpfad, auch wenn dieser nicht gerade hörbar ist. Ein unbekannter Pegel oder eine nicht freigegebene Absenkung verhindert den Abschluss der Auswahl. Es handelt sich nicht um eine dauerhafte Lautstärkeobergrenze: Nach der Auswahl kannst du einen freigegebenen Regler bewusst wieder höher stellen.
+Bei einem **Wechsel** auf ein Phones-Ziel liest die Webseite dessen bestätigten Pegel. Ist er lauter als **−60 dB**, senkt sie ihn in bestätigten Schritten auf −60 dB ab. Liegt er schon darunter, bleibt er unverändert. Diese Absenkung ist eine echte Änderung am gewählten Kopfhörerpfad, auch wenn dieser nicht gerade hörbar ist. Die Auswahl wird erst abgeschlossen, wenn der Pegel bekannt und die gegebenenfalls nötige Absenkung vom DAC bestätigt ist. Es handelt sich nicht um eine dauerhafte Lautstärkeobergrenze: Nach der Auswahl kannst du den Pegel bewusst wieder höher stellen.
 
 ### Den aktiven DAC-Ausgang wirklich umschalten
 
 Der separate Bereich **„Am DAC aktiver Ausgang“** zeigt den vom DAC gemeldeten aktiven Ausgang. **„Am DAC umschalten“** ist eine andere Aktion als die drei Bearbeitungsziele.
 
-Für den freigegebenen ADI-2 DAC FS:
+Beim ADI-2 DAC FS:
 
 1. Unter **DAC-Einstellungen → Gerät → Kopfhörer → Line Out stumm bei Kopfhörer** muss **Umschalten** oder **Eingesteckt** eingestellt sein. Am DAC heißen die Optionen **Toggle Ph/Line** beziehungsweise **Toggle plugged**; du kannst sie auch dort einstellen.
-2. Beide Kopfhörerpfade, Phones und IEM, müssen einen bekannten, bestätigten Pegel von **höchstens −60 dB** haben. Wähle bei Bedarf nacheinander beide als Bearbeitungsziel und warte auf ihre Absenkung. Bei −71 dB ist bereits alles leise genug; −40 dB wäre zu laut für die Freigabe.
+2. Beide Kopfhörerpfade, Phones und IEM, müssen einen bekannten, bestätigten Pegel von **höchstens −60 dB** haben. Wähle bei Bedarf nacheinander beide als Bearbeitungsziel und warte auf ihre Absenkung. Bei −71 dB ist diese Bedingung bereits erfüllt; −40 dB liegt über der Grenze.
 3. Drücke **Am DAC umschalten** einmal. Der DAC wechselt nach seiner eigenen Toggle-Konfiguration. Welche Buchsen berücksichtigt werden, kann auch von eingesteckten Kopfhörern abhängen.
 4. Warte auf die Bestätigung des neuen aktiven Ausgangs. Danach folgt das Bearbeitungsziel diesem Ausgang. Prüfe beide Anzeigen; erst dann weiter regeln.
 
-Die Meldung neben einem gesperrten Schalter erklärt fehlende Pegel, eine ungeeignete Toggle-Einstellung oder fehlende Modellfreigabe. Bei Pro-Geräten stehen deren gerätebezogene Kopfhöreroptionen im Einstellungsbereich; dieser einzelne Umschaltknopf ist dort nicht freigegeben. Wenn ein Umschaltauftrag unbestätigt bleibt, nicht mehrfach blind klicken: Der DAC könnte bereits umgeschaltet haben.
+Beachte den angezeigten Zustand: Fehlende Pegel oder eine ungeeignete Toggle-Einstellung müssen zuerst geklärt werden. Bei Pro-Geräten findest du die zum Modell und Betriebsmodus gehörenden Kopfhöreroptionen im Einstellungsbereich. Wenn ein Umschaltauftrag unbestätigt bleibt, nicht mehrfach blind klicken: Der DAC könnte bereits umgeschaltet haben.
 
 ### Lautstärke und die beiden Zahlen
 
@@ -78,7 +78,7 @@ Die angezeigte **Quelle** gehört zum Bearbeitungsziel. Ein Klick öffnet die zu
 
 **IR Power → Ein / Aus** sendet den eingebauten Power-Code für das bekannte DAC-Modell. Ein/Aus steuert den DAC, nicht die Bridge. Der Sender muss [korrekt angeschlossen](installation.md#optionalen-ir-sender-anschließen) und auf den DAC ausgerichtet sein.
 
-Die Herkunft des IR-Modells steht unter den Tasten: aktueller USB-MIDI-Nachweis, manuelle Modellpräferenz oder zuletzt erkanntes Modell. Bei verbundenem DAC hat seine bestätigte Identität Vorrang. Ohne bekanntes Modell bleiben die IR-Tasten gesperrt. Mit zuvor erkanntem oder manuell passendem Modell kann **Ein** auch bei ausgeschaltetem DAC verfügbar sein.
+Die Herkunft des IR-Modells steht unter den Tasten: aktueller USB-MIDI-Nachweis, manuelle Modellpräferenz oder zuletzt erkanntes Modell. Bei verbundenem DAC hat seine bestätigte Identität Vorrang. Für einen IR-Befehl muss das passende Modell bekannt sein. Mit zuvor erkanntem oder manuell passendem Modell kann **Ein** auch bei ausgeschaltetem DAC verfügbar sein.
 
 „IR-Ausgang bereit“ zeigt die Verfügbarkeit der Signal-Ausgabe in der Bridge. Es erkennt **nicht**, ob tatsächlich ein Modul eingesteckt ist oder der DAC freie Sicht hat. Ein grüner Senderstatus ist daher kein Reichweitentest. Eine Sendebestätigung beweist nur, dass der IR-Befehl ausgegeben wurde. Erst die spätere MIDI-Antwort belegt einen wieder erreichbaren DAC; fehlendes MIDI allein beweist umgekehrt nicht sicher, dass er ausgeschaltet ist.
 
@@ -114,7 +114,7 @@ Die Profilvorschau hilft, Unterschiede zu erkennen. Die Lautstärkeübernahme is
 
 Die automatische Erkennung fragt die drei RME-Familien nacheinander an. **Automatisch** ist die normale Wahl. Die tatsächliche Antwort entscheidet über Namen, Befehle und dargestellte Werte.
 
-Eine manuelle Modellwahl speichert eine **Such- und IR-Präferenz**. Bei der nächsten USB-Erkennung wird dieses Modell zuerst geprüft. Sie verwandelt kein Gerät in einen anderen DAC, ersetzt keine MIDI-Verbindung und aktiviert keine gesperrten Regler. Bei einem bereits verbundenen Gerät wirkt die Suchreihenfolge erst nach erneuter USB-Erkennung.
+Eine manuelle Modellwahl speichert eine **Such- und IR-Präferenz**. Bei der nächsten USB-Erkennung wird dieses Modell zuerst geprüft. Die tatsächlich vom DAC gemeldete Identität bleibt für dessen Einstellungen maßgeblich; die Bildauswahl ersetzt keine MIDI-Verbindung. Bei einem bereits verbundenen Gerät wirkt die Suchreihenfolge erst nach erneuter USB-Erkennung.
 
 Für IR-Einschalten ohne vorherige Erkennung kannst du das **wirklich vorhandene** Modell manuell wählen. Für einen verbundenen DAC überschreibt die erkannte Identität diese Präferenz bei der Befehlswahl. Eine Abweichung wird angezeigt.
 

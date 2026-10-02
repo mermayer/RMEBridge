@@ -25,7 +25,7 @@ Die Bridge sendet Steuerbefehle über USB-MIDI und liest Antworten des DACs. MID
 
 Der USB-Anschluss des DACs gehört währenddessen der Bridge. Er kann nicht zugleich mit einem Computer oder USB-Streamer verbunden sein. Die Bridge ist weder USB-Audio-Streamer noch USB-Durchleitung. Bei Pro-Geräten müssen Betriebsart und Signalweg außerdem zu deiner Verkabelung passen.
 
-Über die Webseiten kannst du aktuelle Werte ansehen, freigegebene Einstellungen verändern und die Bridge konfigurieren. Ein optionaler IR-Sender übernimmt Ein- und Ausschalten: Dafür gibt es keine entsprechende MIDI-Power-Funktion. Du brauchst keinen IR-Empfänger und musst keine Fernbedienung anlernen; die Modellcodes sind eingebaut.
+Über die Webseiten kannst du aktuelle Werte ansehen, DAC-Einstellungen verändern und die Bridge konfigurieren. Ein optionaler IR-Sender übernimmt Ein- und Ausschalten: Dafür gibt es keine entsprechende MIDI-Power-Funktion. Du brauchst keinen IR-Empfänger und musst keine Fernbedienung anlernen; die Modellcodes sind eingebaut.
 
 Nicht Bestandteil dieser Anleitung sind Roon-Anbindung, Bluetooth-Pairing, Equalizer-Kurven, ein EQ-Preset-Editor oder das direkte Laden/Speichern der internen DAC-Setups. Die RME Bridge arbeitet hier eigenständig. Verwechsele sie nicht mit der RoonPilot IR Bridge.
 
@@ -33,18 +33,14 @@ Nicht Bestandteil dieser Anleitung sind Roon-Anbindung, Bluetooth-Pairing, Equal
 
 Die Oberfläche kennt die Familien **ADI-2 DAC**, **ADI-2 Pro** und **ADI-2/4 Pro SE**. Maßgeblich sind die tatsächliche MIDI-Antwort, die DAC-Firmware und der aktuelle Betriebsmodus – nicht allein die Beschriftung eines ausgewählten Bildes.
 
-| Funktion in dieser Firmware | ADI-2 DAC FS | ADI-2 Pro | ADI-2/4 Pro SE |
+| Eigenschaft | ADI-2 DAC FS | ADI-2 Pro | ADI-2/4 Pro SE |
 |---|---|---|---|
 | Modell erkennen, gemeldete Werte darstellen | Ja | Ja | Ja |
-| Modellbezogene Nicht-EQ-Einstellungen | Ja, soweit vom DAC gemeldet | Soweit vom DAC gemeldet und freigegeben | Soweit vom DAC gemeldet und freigegeben |
+| Modellbezogene Nicht-EQ-Einstellungen über MIDI | Die zum Modell gehörenden Einstellungen | Die zum Modell und Betriebsmodus gehörenden Einstellungen | Die zum Modell und Betriebsmodus gehörenden Einstellungen |
 | Analoges Eingangsmenü | Nein, kein analoger Eingang | Ja | Ja, zusätzlich RIAA-Funktionen |
-| Lautstärke-Slider und ±0,5-dB-Tasten | Freigegeben für die erkannte DAC-FS-USB-Kennung | Nicht freigegeben | Nicht freigegeben |
-| AutoDark-Komfortschalter auf „DAC-Steuerung“ | Freigegeben | Nicht freigegeben; Parameterbereich beachten | Nicht freigegeben; Parameterbereich beachten |
-| Bridge-Profile erstellen und anwenden | Ja | Nicht verfügbar | Nicht verfügbar |
-| „Am DAC umschalten“ | Ja, unter den beschriebenen Bedingungen | Nicht verfügbar | Nicht verfügbar |
 | Modellbezogene IR-Power-Codes | Ja, mit passendem Sender | Ja, mit passendem Sender | Ja, mit passendem Sender |
 
-Ein ausgegrauter Regler ist kein Hinweis, dass du „etwas freischalten“ musst. [Hier findest du die möglichen Ursachen](troubleshooting.md#ein-regler-ist-grau-oder-eine-option-fehlt). Die automatische Erkennung unterscheidet die Familien; sie garantiert nicht die Unterstützung jeder historischen Hardware- oder Firmwarevariante.
+Die Webseiten passen ihre Optionen an das erkannte Modell an. Eine analoge Eingangsoption erscheint deshalb nicht beim ADI-2 DAC; RIAA gehört zum ADI-2/4 Pro SE. Auch Betriebsmodus, Abtastrate und aktuelle MIDI-Werte können beeinflussen, welche Einstellung gerade bedienbar ist. [Hier findest du die möglichen Ursachen für einen grauen Regler](troubleshooting.md#ein-regler-ist-grau-oder-eine-option-fehlt).
 
 ## Drei Dinge, die du dir merken solltest
 
